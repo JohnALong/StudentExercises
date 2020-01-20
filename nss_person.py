@@ -4,3 +4,6 @@ class NSSPerson():
         self.last_name = last_name
         self.slack = slack
         self.cohort = cohort
+
+
+

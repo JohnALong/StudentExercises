@@ -8,3 +8,8 @@ class Student(NSSPerson):
     def student_info(self):
         for exercise in self.exercises:
             print(exercise.name)
+
+
+
+
+
