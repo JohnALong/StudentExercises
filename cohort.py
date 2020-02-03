@@ -4,6 +4,9 @@ class Cohort:
         self.students = list()
         self.instructors = list()
 
+    def __repr__(self):
+        return f'{self.Cohort_Name} is full'
+
     def add_student(self, student):
         self.students.append(student)
 
