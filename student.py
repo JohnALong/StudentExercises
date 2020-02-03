@@ -5,9 +5,13 @@ class Student(NSSPerson):
         super().__init__(first_name, last_name, slack, cohort)
         self.exercises = list()
 
+    def __repr__(self):
+        return f'{self.First_Name} {self.Last_Name} is in {self.Cohort_Name}'
+
     def student_info(self):
         for exercise in self.exercises:
             print(exercise.name)
+            
 
 
 

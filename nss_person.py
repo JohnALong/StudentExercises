@@ -1,9 +1,9 @@
 class NSSPerson():
     def __init__(self, first_name, last_name, slack, cohort):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.slack = slack
-        self.cohort = cohort
+        self.First_Name = first_name
+        self.Last_Name = last_name
+        self.Slack_Handle = slack
+        self.Cohort_Name = cohort
 
 
 
