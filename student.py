@@ -6,7 +6,7 @@ class Student(NSSPerson):
         self.exercises = list()
 
     def __repr__(self):
-        return f'{self.First_Name} {self.Last_Name} is in {self.Cohort_Name}'
+        return f'{self.First_Name} {self.Last_Name} is in'
 
     def student_info(self):
         for exercise in self.exercises:

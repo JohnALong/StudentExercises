@@ -8,3 +8,6 @@ class Instructor(NSSPerson):
     def assign_exercise(self, cohortobj, exerciseobj):
         for student in cohortobj.students:
             student.exercises.append(exerciseobj)
+
+    def __repr__(self):
+        return f'{self.First_Name} {self.Last_Name} is teaching'
