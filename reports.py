@@ -248,7 +248,7 @@ class StudentExerciseReports():
 
             # print students assigned to exercise without repeating exercise
             for exercise_name, students in exercises.items():
-                print(exercise_name)
+                print(f'{exercise_name} is being worked on by')
                 for student in students:
                     print(f'\t* {student}')
 
@@ -270,6 +270,64 @@ class StudentExerciseReports():
                 for exercise in exercises:
                     print(f'\t* {exercise[0]}')
 
+    # list exercises assinged to and by whom
+    def exercises_students_instructors(self):
+        """Retrieve all exercises and the students working on each one and who assigned it"""
+
+        with sqlite3.connect(self.db_path) as conn:
+
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""SELECT
+                e.Exercise_Id Exercise_Id,
+                e.Exercise_Name,
+                i.Instructor_Id Instructor_Id,
+                i.First_Name,
+                i.Last_Name,
+                s.Student_Id Student_Id,
+                s.First_Name,
+                s.Last_Name
+                FROM Exercises e 
+                JOIN Student_Exercise se ON se.Exercise_Id = e.Exercise_Id
+                JOIN Instructors i ON i.Instructor_Id = se.Instructor_Id
+                JOIN Students s ON se.Student_Id = s.Student_Id;
+             """)
+
+            all_exercises_students_instructors = db_cursor.fetchall()
+
+            # takes list of tuples and convert to dictionary to remove duplicates and create nested info for usability
+            exercises = {}
+            instructors = {}
+            students = {}
+
+            for exercise_student in all_exercises_students_instructors:
+                exercise_id = exercise_student[0]
+                exercise_name = exercise_student[1]
+                instructor_id = exercise_student[2]
+                instructor_name = f'{exercise_student[3]} {exercise_student[4]}'
+                student_id = exercise_student[5]
+                student_name = f'{exercise_student[6]} {exercise_student[7]}'
+
+                if exercise_name not in exercises:
+                    exercises[exercise_name] = instructors, students
+
+            for exercise_student in all_exercises_students_instructors:
+                exercise_id = exercise_student[0]
+                exercise_name = exercise_student[1]
+                instructor_id = exercise_student[2]
+                instructor_name = f'{exercise_student[3]} {exercise_student[4]}'
+                student_id = exercise_student[5]
+                student_name = f'{exercise_student[6]} {exercise_student[7]}'
+
+                exercises[exercise_name]:instructors.append(instructor_name)
+                exercises[exercise_name]:students.append(student_name)
+                print(exercises)
+
+            for exercise_name, students in exercises.items():
+                print(f'{exercise_name} is being worked on by')
+                for student in students:
+                    print(f'\t* {student}')
+
 
 
 reports = StudentExerciseReports()
@@ -280,5 +338,6 @@ reports = StudentExerciseReports()
 # reports.js_exercises()
 # reports.python_exercises()
 # reports.exercises_with_students()
-reports.exercises_by_instructors()
+# reports.exercises_by_instructors()
+reports.exercises_students_instructors()
 
